@@ -4,10 +4,14 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
+const helmet = require("helmet");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-
+const googleRouter = require("./routes/google");
+const serviceRouter = require("./routes/service");
+const boardRouter = require("./routes/board");
+const historyRouter = require("./routes/history");
 const app = express();
 
 // view engine setup
@@ -19,9 +23,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(helmet());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/google", googleRouter);
+app.use("/service", serviceRouter);
+app.use("/board", boardRouter);
+app.use("/history", historyRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
